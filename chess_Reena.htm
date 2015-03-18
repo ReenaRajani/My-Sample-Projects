@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Chess Moves </title>
+	<style type="text/css">
+	.black{
+		background-color: gray;
+	}
+	.white{
+		background-color: white;
+	}
+	.corner{
+		border-width: 0px;
+		border-collapse: collapse;
+	}
+	.selected_cell{
+		background-color: #7FFFD4;
+		box-shadow: 10px 10px 5px #778899;
+	}
+	.display_cell{
+		background-color: #20B2AA;
+	}
+	.chessboard{
+		border-collapse: collapse;
+		table-layout: fixed;
+	}
+
+	</style>
+	
+</head>
+<body>
+	<h1> Welcome to the game of Chess </h1>
+	
+	<form name="myForm" target="_self" action="" autocomplete="off" submit = >
+		Enter the starting coordinates in standard chess notation (e.g : a4) :
+		<input type ="text" name ="coordinates" />
+		<br>
+		<input type ="button" value ="Show Valid Moves" onclick="return validate()"/>
+		<input type ="reset" value="Reset" onclick = "resetform()"/>
+		<p><span id='display'></span> </p>
+   
+ </br></br>
+
+	<table id="chess_board" width="450" height="400" border="1" cellpadding="2" cellspacing="0" class ="chessboard">
+		<tr>
+			<th class ="corner"> 8 </th>
+			<td id="A8" class = "black"> </td>
+			<td id="B8"> </td>
+			<td id="C8" class = "black"> </td>
+			<td id="D8"> </td>
+			<td id="E8" class = "black"> </td>
+			<td id="F8"> </td>
+			<td id="G8" class = "black"> </td>
+			<td id="H8"> </td>
+		</tr>
+			<tr>
+			<th class ="corner"> 7 </th>
+			<td id="A7"> </td>
+			<td id="B7" class = "black"> </td>
+			<td id="C7"> </td>
+			<td id="D7" class = "black"> </td>
+			<td id="E7"> </td>
+			<td id="F7" class = "black"> </td>
+			<td id="G7"> </td>
+			<td id="H7" class = "black"> </td>
+		</tr>
+			<tr>
+			<th class ="corner"> 6 </th>
+			<td id="A6" class = "black"> </td>
+			<td id="B6"> </td>
+			<td id="C6" class = "black"> </td>
+			<td id="D6"> </td>
+			<td id="E6" class = "black"> </td>
+			<td id="F6"> </td>
+			<td id="G6" class = "black"> </td>
+			<td id="H6"> </td>
+		</tr>
+			<tr>
+			<th class ="corner"> 5 </th>
+			<td id="A5"> </td>
+			<td id="B5" class = "black"> </td>
+			<td id="C5"> </td>
+			<td id="D5" class = "black"> </td>
+			<td id="E5"> </td>
+			<td id="F5" class = "black"> </td>
+			<td id="G5"> </td>
+			<td id="H5" class = "black"> </td>
+		</tr>
+			<tr>
+			<th class ="corner"> 4 </th>
+			<td id="A4" class = "black"> </td>
+			<td id="B4"> </td>
+			<td id="C4" class = "black"> </td>
+			<td id="D4"> </td>
+			<td id="E4" class = "black"> </td>
+			<td id="F4"> </td>
+			<td id="G4" class = "black"> </td>
+			<td id="H4"> </td>
+		</tr>
+			<tr>
+			<th class ="corner"> 3 </th>
+			<td id="A3"> </td>
+			<td id="B3" class = "black"> </td>
+			<td id="C3"> </td>
+			<td id="D3" class = "black"> </td>
+			<td id="E3"> </td>
+			<td id="F3" class = "black"> </td>
+			<td id="G3"> </td>
+			<td id="H3" class = "black"> </td>
+		</tr>
+			<tr>
+			<th class ="corner"> 2 </th>
+			<td id="A2" class = "black"> </td>
+			<td id="B2"> </td>
+			<td id="C2" class = "black"> </td>
+			<td id="D2"> </td>
+			<td id="E2" class = "black"> </td>
+			<td id="F2"> </td>
+			<td id="G2" class = "black"> </td>
+			<td id="H2"> </td>
+		</tr>
+		<tr>
+			<th class ="corner"> 1 </th>
+			<td id="A1"> </td>
+			<td id="B1" class = "black"> </td>
+			<td id="C1"> </td>
+			<td id="D1" class = "black"> </td>
+			<td id="E1"> </td>
+			<td id="F1" class = "black"> </td>
+			<td id="G1"> </td>
+			<td id="H1" class = "black"> </td>
+		</tr>
+		<tr>
+			<th class ="corner"> &nbsp; </th>
+			<th class ="corner"> a </th>
+			<th class ="corner"> b </th>
+			<th class ="corner"> c </th>
+			<th class ="corner"> d </th>
+			<th class ="corner"> e </th>
+			<th class ="corner"> f </th>
+			<th class ="corner"> g </th>
+			<th class ="corner"> h </th>
+
+		</tr>
+	</table>
+</br></br>
+  </form>
+		<script type="text/javascript">
+	<!-- 
+	
+	function validate(){	
+		var co_ord = document.myForm.coordinates.value;
+		if(co_ord == "")
+		{
+			alert("please Enter the coordinates !! it should not be empty !");
+			document.myForm.coordinates.focus();
+			return false;
+		}
+		else
+		{
+			var pattern = new RegExp("^[a-h]{1}[1-8]{1}$","i" );
+			var res = pattern.test(co_ord);
+			if(!res)
+			{
+				alert("please Enter valid coordinates!");
+				document.myForm.coordinates.focus();
+			}
+			else
+			{
+			
+				var obj = document.getElementById(co_ord.toUpperCase());
+				obj.className = "selected_cell";
+				knightmoves(co_ord);
+
+			}
+
+		}	
+		return( true ); 
+	}
+
+	function knightmoves(co_ord)
+	{
+		var possiblemoves =[];
+		var row_letter = co_ord.charCodeAt(0);
+		var col_letter = co_ord.charAt(1);
+		for (var i = -2; i <= 2; i++)
+		{
+			if(((row_letter+i) >= 97  && (row_letter+i) <= 104) || ((row_letter+i) >= 65  && (row_letter+i) <= 72 ))
+			{
+				switch (i)
+				{
+					case 2:
+					case -2:
+						if(!((col_letter*1+1)>8))
+						{
+							possiblemoves.push((String.fromCharCode(row_letter+i)) + (col_letter*1+1));
+			
+						}
+						if(!((col_letter-1)< 1))
+						{
+							possiblemoves.push((String.fromCharCode(row_letter+i)) + (col_letter-1));
+								
+						}
+						break;
+
+						case 1:
+						case -1:
+							if(!((col_letter*1+2)> 8))
+							{
+								possiblemoves.push((String.fromCharCode(row_letter+i)) + (col_letter*1+2));
+							}
+							if(!((col_letter-2)< 1))
+							{
+								possiblemoves.push((String.fromCharCode(row_letter+i)) + (col_letter-2));
+							}
+							break;	
+					
+					}
+				}
+		}
+		displayresult(possiblemoves);
+
+	}
+
+	function displayresult(possiblemoves)
+	{
+		var txt="";
+		for(var i=0; i< possiblemoves.length; i++)
+		{
+			var obj = document.getElementById(possiblemoves[i].toUpperCase());
+			obj.className = "display_cell";
+			txt = txt + possiblemoves[i] + "<br>";
+
+		}
+		   document.getElementById('display').innerHTML ="valid moves are : </br> "+  txt;
+	}
+	
+	function resetform()
+	{
+			window.location.reload(true);
+	}
+
+	//-->
+	</script>
+	<noscript>Your browser does not support Javascript!</noscript>
+</body>
+</html>
